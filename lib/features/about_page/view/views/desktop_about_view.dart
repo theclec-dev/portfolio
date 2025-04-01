@@ -40,7 +40,7 @@ class DesktopAboutView extends StatelessWidget {
                       tag: 'brand_name',
                       child: Text(
                         'CLEC.dev',
-                        style: AppTextStyles.brandName,
+                        style: AppTextStyles.brandName(context),
                       ),
                     ),
                   ],
@@ -52,13 +52,13 @@ class DesktopAboutView extends StatelessWidget {
               tag: 'about',
               child: Text(
                 'About',
-                style: AppTextStyles.pageTitle,
+                style: AppTextStyles.pageTitle(context),
               ),
             ),
             Gap(100.h),
             Text(
               'German Machine is a Flutter Dev know for his machine like speed at coding and debugging. He is also an Elder and Hoeless',
-              style: AppTextStyles.bodyRegular,
+              style: AppTextStyles.bodyRegular(context),
               textAlign: TextAlign.center,
             ),
             const Spacer(),
@@ -71,7 +71,7 @@ class DesktopAboutView extends StatelessWidget {
                     tag: 'projects',
                     child: Text(
                       'Projects',
-                      style: AppTextStyles.section,
+                      style: AppTextStyles.section(context),
                     ),
                   ),
                 ),
@@ -82,7 +82,7 @@ class DesktopAboutView extends StatelessWidget {
                     tag: 'contact',
                     child: Text(
                       'Contact',
-                      style: AppTextStyles.section,
+                      style: AppTextStyles.section(context),
                     ),
                   ),
                 ),

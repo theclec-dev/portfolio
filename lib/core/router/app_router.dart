@@ -5,6 +5,7 @@ import 'package:portfolio/features/contact_page/view/pages/contact_page.dart';
 import 'package:portfolio/features/landing_page/view/pages/landing_page.dart';
 import 'package:portfolio/features/loading_page/view/pages/loading_page.dart';
 import 'package:portfolio/features/project_details_page/view/pages/project_details_page.dart';
+import 'package:portfolio/features/projects_page/models/project_model.dart';
 import 'package:portfolio/features/projects_page/view/pages/projects_page.dart';
 
 part 'app_router.gr.dart';

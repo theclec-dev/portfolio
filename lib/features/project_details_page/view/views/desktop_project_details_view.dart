@@ -8,14 +8,25 @@ import 'package:portfolio/core/constants/assets.dart';
 import 'package:portfolio/core/router/app_router.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/theme/app_text_styles.dart';
-import 'package:portfolio/features/projects_page/controller/projects_controller.dart';
+import 'package:portfolio/features/projects_page/models/project_model.dart';
 
-class DesktopProjectDetailsView extends ConsumerWidget {
-  const DesktopProjectDetailsView({super.key});
+class DesktopProjectDetailsView extends ConsumerStatefulWidget {
+  const DesktopProjectDetailsView({
+    super.key,
+    required this.project,
+  });
+  final ProjectModel project;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final project = ref.watch(projectProvider);
+  ConsumerState<DesktopProjectDetailsView> createState() =>
+      _DesktopProjectDetailsViewState();
+}
+
+class _DesktopProjectDetailsViewState
+    extends ConsumerState<DesktopProjectDetailsView> {
+  @override
+  Widget build(BuildContext context) {
+    final project = widget.project;
     return Scaffold(
       backgroundColor: AppColors.black,
       body: Padding(
@@ -48,7 +59,7 @@ class DesktopProjectDetailsView extends ConsumerWidget {
                           tag: 'brand_name',
                           child: Text(
                             'CLEC.dev',
-                            style: AppTextStyles.brandName.copyWith(
+                            style: AppTextStyles.brandName(context).copyWith(
                               color: AppColors.white,
                             ),
                           ),
@@ -63,7 +74,7 @@ class DesktopProjectDetailsView extends ConsumerWidget {
                     tag: 'projects',
                     child: Text(
                       'Projects',
-                      style: AppTextStyles.section.copyWith(
+                      style: AppTextStyles.section(context).copyWith(
                         color: AppColors.white,
                       ),
                     ),
@@ -81,8 +92,8 @@ class DesktopProjectDetailsView extends ConsumerWidget {
                       width: deviceWidth(context),
                     ),
                     Text(
-                      project!.name,
-                      style: AppTextStyles.pageTitle.copyWith(
+                      project.name,
+                      style: AppTextStyles.pageTitle(context).copyWith(
                           color: AppColors.white,
                           fontSize: 64.spMin,
                           fontWeight: FontWeight.w800),
@@ -90,7 +101,7 @@ class DesktopProjectDetailsView extends ConsumerWidget {
                     Gap(60.h),
                     Text(
                       project.description,
-                      style: AppTextStyles.projectName.copyWith(
+                      style: AppTextStyles.projectName(context).copyWith(
                         height: (54 / 48).spMin,
                         color: AppColors.white,
                       ),
@@ -113,7 +124,7 @@ class DesktopProjectDetailsView extends ConsumerWidget {
                     tag: 'about',
                     child: Text(
                       'About',
-                      style: AppTextStyles.section.copyWith(
+                      style: AppTextStyles.section(context).copyWith(
                         color: AppColors.white,
                       ),
                     ),
@@ -124,7 +135,7 @@ class DesktopProjectDetailsView extends ConsumerWidget {
                   tag: 'contact',
                   child: Text(
                     'Contact',
-                    style: AppTextStyles.section.copyWith(
+                    style: AppTextStyles.section(context).copyWith(
                       color: AppColors.white,
                     ),
                   ),

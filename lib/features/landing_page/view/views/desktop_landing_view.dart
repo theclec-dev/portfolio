@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+
 import 'package:portfolio/core/constants/assets.dart';
 import 'package:portfolio/core/router/app_router.dart';
 import 'package:portfolio/core/theme/app_text_styles.dart';
@@ -20,7 +21,7 @@ class _DesktopLandingViewState extends ConsumerState<DesktopLandingView> {
   @override
   Widget build(BuildContext context) {
     final avatar = ref.watch(con.avatarProvider);
-    final brandFont = ref.watch(con.brandFontProvider);
+    final isBrandHovered = ref.watch(con.brandFontProvider);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,14 +31,12 @@ class _DesktopLandingViewState extends ConsumerState<DesktopLandingView> {
             onEnter: (_) {
               ref.read(con.avatarProvider.notifier).state =
                   AppAssets.avatarVector;
-              ref.read(con.brandFontProvider.notifier).state =
-                  AppTextStyles.brandNameHover;
+              ref.read(con.brandFontProvider.notifier).state = true;
             },
             onExit: (_) {
               ref.read(con.avatarProvider.notifier).state =
                   AppAssets.avatarLive;
-              ref.read(con.brandFontProvider.notifier).state =
-                  AppTextStyles.brandName;
+              ref.read(con.brandFontProvider.notifier).state = false;
             },
             child: Hero(
               tag: 'avatar',
@@ -53,27 +52,27 @@ class _DesktopLandingViewState extends ConsumerState<DesktopLandingView> {
           Gap(37.h),
           Text(
             'Chukwuebuka Charles Enemuoh',
-            style: AppTextStyles.devName,
+            style: AppTextStyles.devName(context),
           ),
           Gap(11.h),
           MouseRegion(
             onEnter: (_) {
               ref.read(con.avatarProvider.notifier).state =
                   AppAssets.avatarVector;
-              ref.read(con.brandFontProvider.notifier).state =
-                  AppTextStyles.brandNameHover;
+              ref.read(con.brandFontProvider.notifier).state = true;
             },
             onExit: (_) {
               ref.read(con.avatarProvider.notifier).state =
                   AppAssets.avatarLive;
-              ref.read(con.brandFontProvider.notifier).state =
-                  AppTextStyles.brandName;
+              ref.read(con.brandFontProvider.notifier).state = false;
             },
             child: Hero(
               tag: 'brand_name',
               child: Text(
                 'The-Clec.Dev',
-                style: brandFont,
+                style: isBrandHovered
+                    ? AppTextStyles.brandNameHover(context)
+                    : AppTextStyles.brandName(context),
               ),
             ),
           ),
@@ -89,7 +88,7 @@ class _DesktopLandingViewState extends ConsumerState<DesktopLandingView> {
                   },
                   child: Text(
                     'Projects',
-                    style: AppTextStyles.section,
+                    style: AppTextStyles.section(context),
                   ),
                 ),
               ),
@@ -102,7 +101,7 @@ class _DesktopLandingViewState extends ConsumerState<DesktopLandingView> {
                   tag: 'about',
                   child: Text(
                     'About',
-                    style: AppTextStyles.section,
+                    style: AppTextStyles.section(context),
                   ),
                 ),
               ),
@@ -111,7 +110,7 @@ class _DesktopLandingViewState extends ConsumerState<DesktopLandingView> {
                 tag: 'contact',
                 child: Text(
                   'Contact',
-                  style: AppTextStyles.section,
+                  style: AppTextStyles.section(context),
                 ),
               ),
             ],

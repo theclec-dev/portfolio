@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+
 import 'package:portfolio/core/constants/assets.dart';
+import 'package:portfolio/core/router/app_router.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/theme/app_text_styles.dart';
 import 'package:portfolio/features/projects_page/controller/projects_controller.dart';
-
-import '../../../../core/router/app_router.dart';
 
 class DesktopProjectsView extends ConsumerWidget {
   DesktopProjectsView({super.key});
@@ -124,7 +124,7 @@ class DesktopProjectsView extends ConsumerWidget {
                           tag: 'brand_name',
                           child: Text(
                             'CLEC.dev',
-                            style: AppTextStyles.brandName,
+                            style: AppTextStyles.brandName(context),
                           ),
                         ),
                       ],
@@ -136,7 +136,7 @@ class DesktopProjectsView extends ConsumerWidget {
                   tag: 'projects',
                   child: Text(
                     'Projects',
-                    style: AppTextStyles.pageTitle.copyWith(
+                    style: AppTextStyles.pageTitle(context).copyWith(
                       color: backgroundColor[1],
                     ),
                   ),
@@ -171,13 +171,17 @@ class DesktopProjectsView extends ConsumerWidget {
                               onTap: () {
                                 ref.read(projectProvider.notifier).state =
                                     con.projects[index];
-                                context.pushRoute(ProjectDetailsRoute(
-                                   ));
+                                context.pushRoute(
+                                  ProjectDetailsRoute(
+                                    project: con.projects[index],
+                                  ),
+                                );
                               },
                               child: Text(
                                 con.projects[index].name,
                                 // textAlign: TextAlign.center,
-                                style: AppTextStyles.projectName.copyWith(
+                                style:
+                                    AppTextStyles.projectName(context).copyWith(
                                   color: backgroundColor[1],
                                 ),
                               ),
@@ -199,7 +203,7 @@ class DesktopProjectsView extends ConsumerWidget {
                         tag: 'about',
                         child: Text(
                           'About',
-                          style: AppTextStyles.section.copyWith(
+                          style: AppTextStyles.section(context).copyWith(
                             color: backgroundColor[1],
                           ),
                         ),
@@ -210,7 +214,7 @@ class DesktopProjectsView extends ConsumerWidget {
                       tag: 'contact',
                       child: Text(
                         'Contact',
-                        style: AppTextStyles.section.copyWith(
+                        style: AppTextStyles.section(context).copyWith(
                           color: backgroundColor[1],
                         ),
                       ),

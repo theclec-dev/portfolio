@@ -42,7 +42,7 @@ class _ResponsiveAppState extends State<ResponsiveApp> {
       designSize: isMobile ? const Size(345, 850) : const Size(1920, 1080),
       child: MaterialApp.router(
         routerConfig: widget.appRouter.config(),
-        title: 'Flutter Demo',
+        title: 'CLEC.dev',
         theme: AppThemes.lightTheme,
         builder: (context, child) {
           return ResponsiveWrapper(

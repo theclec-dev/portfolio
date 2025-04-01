@@ -39,7 +39,7 @@ class DesktopContactView extends StatelessWidget {
                       tag: 'brand_name',
                       child: Text(
                         'CLEC.dev',
-                        style: AppTextStyles.brandName,
+                        style: AppTextStyles.brandName(context),
                       ),
                     ),
                   ],
@@ -51,13 +51,13 @@ class DesktopContactView extends StatelessWidget {
               tag: 'contact',
               child: Text(
                 'Contact',
-                style: AppTextStyles.pageTitle,
+                style: AppTextStyles.pageTitle(context),
               ),
             ),
             Gap(100.h),
             Text(
               'chizzykas@gmail.com',
-              style: AppTextStyles.bodyRegular,
+              style: AppTextStyles.bodyRegular(context),
               textAlign: TextAlign.center,
             ),
             const Spacer(),
@@ -70,7 +70,7 @@ class DesktopContactView extends StatelessWidget {
                     tag: 'projects',
                     child: Text(
                       'Projects',
-                      style: AppTextStyles.section,
+                      style: AppTextStyles.section(context),
                     ),
                   ),
                 ),
@@ -81,7 +81,7 @@ class DesktopContactView extends StatelessWidget {
                     tag: 'about',
                     child: Text(
                       'About',
-                      style: AppTextStyles.section,
+                      style: AppTextStyles.section(context),
                     ),
                   ),
                 ),

@@ -76,18 +76,39 @@ class LoadingRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ProjectDetailsPage]
-class ProjectDetailsRoute extends PageRouteInfo<void> {
-  const ProjectDetailsRoute({List<PageRouteInfo>? children})
-    : super(ProjectDetailsRoute.name, initialChildren: children);
+class ProjectDetailsRoute extends PageRouteInfo<ProjectDetailsRouteArgs> {
+  ProjectDetailsRoute({
+    Key? key,
+    required ProjectModel project,
+    List<PageRouteInfo>? children,
+  }) : super(
+         ProjectDetailsRoute.name,
+         args: ProjectDetailsRouteArgs(key: key, project: project),
+         initialChildren: children,
+       );
 
   static const String name = 'ProjectDetailsRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const ProjectDetailsPage();
+      final args = data.argsAs<ProjectDetailsRouteArgs>();
+      return ProjectDetailsPage(key: args.key, project: args.project);
     },
   );
+}
+
+class ProjectDetailsRouteArgs {
+  const ProjectDetailsRouteArgs({this.key, required this.project});
+
+  final Key? key;
+
+  final ProjectModel project;
+
+  @override
+  String toString() {
+    return 'ProjectDetailsRouteArgs{key: $key, project: $project}';
+  }
 }
 
 /// generated route for

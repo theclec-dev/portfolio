@@ -58,7 +58,7 @@ class _DesktopLoadingViewState extends State<DesktopLoadingView>
                     scale: 1 - 0.5 * sin(_controller.value * 2 * pi),
                     child: Text(
                       'The-Clec.Dev',
-                      style: AppTextStyles.devName,
+                      style: AppTextStyles.devName(context),
                     ),
                   ),
                 ],
