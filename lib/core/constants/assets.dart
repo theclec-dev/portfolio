@@ -13,5 +13,8 @@ class AppAssets {
   static String avatarLive = '${imagePath}avatar_live.png';
   static String photo = '${imagePath}photo.png';
 
+  //project images
+  static String projectIcon(String id) => '${imagePath}projects/$id.png';
+
   //icons
 }

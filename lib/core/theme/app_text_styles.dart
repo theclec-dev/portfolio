@@ -1,19 +1,20 @@
-// import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/app.dart';
 import 'package:portfolio/core/constants/assets.dart';
-import 'package:portfolio/core/theme/app_colors.dart';
+import 'package:portfolio/core/theme/app_color_tokens.dart';
 
 class AppTextStyles {
   static bool isMobile(BuildContext context){
     return ResponsiveWrapper.of(context)!.isMobile;
   }
-  // final isMobile = ResponsiveWrapper.of(context)!.isMobile;
+
+  static Color _textPrimary(BuildContext context) =>
+      Theme.of(context).extension<AppColorTokens>()!.textPrimary;
+
    static TextStyle pageTitle(BuildContext context) => TextStyle(
     fontSize: isMobile(context) ? 38.spMin : 96.spMin ,
-    color: AppColors.black,
+    color: _textPrimary(context),
     fontWeight: FontWeight.w600,
     fontFamily: AppAssets.archivo,
     height: (38.4 / 96).spMin,
@@ -21,7 +22,7 @@ class AppTextStyles {
 
   static TextStyle homeTitle(BuildContext context) => TextStyle(
     fontSize: isMobile(context)? 24.spMin : 48.spMin,
-    color: AppColors.black,
+    color: _textPrimary(context),
     fontWeight: FontWeight.w800,
     fontFamily: AppAssets.archivo,
     height: (38.4 / 48).spMin,
@@ -30,7 +31,7 @@ class AppTextStyles {
   static TextStyle brandName(BuildContext context) => TextStyle(
     fontFamily: AppAssets.offBit,
     fontSize: isMobile(context)? 16.spMin : 24.spMin,
-    color: AppColors.black,
+    color: _textPrimary(context),
     fontWeight: FontWeight.w400,
     height: (38.4 / 24).spMin,
   );
@@ -42,7 +43,7 @@ class AppTextStyles {
 
   static TextStyle devName(BuildContext context) => TextStyle(
     fontSize: isMobile(context) ? 24.spMin : 48.spMin,
-    color: AppColors.black,
+    color: _textPrimary(context),
     fontWeight: FontWeight.w800,
     fontFamily: AppAssets.archivo,
     height: (38.4 / 48).spMin,
@@ -50,7 +51,7 @@ class AppTextStyles {
 
   static TextStyle section(BuildContext context) => TextStyle(
     fontSize:isMobile(context)? 14.spMin  : 24.spMin,
-    color: AppColors.black,
+    color: _textPrimary(context),
     fontWeight: FontWeight.w600,
     fontFamily: AppAssets.archivo,
     height: (38.4 / 24).spMin,
@@ -58,7 +59,7 @@ class AppTextStyles {
 
   static TextStyle projectName(BuildContext context) => TextStyle(
     fontSize:isMobile(context)? 24.spMin  : 48.spMin,
-    color: AppColors.black,
+    color: _textPrimary(context),
     fontWeight: FontWeight.w600,
     fontFamily: AppAssets.archivo,
     height: (38.4 / 48).spMin,
@@ -66,7 +67,7 @@ class AppTextStyles {
 
   static TextStyle bodyRegular(BuildContext context) => TextStyle(
     fontSize: isMobile(context)? 24.spMin  : 48.spMin,
-    color: AppColors.black,
+    color: _textPrimary(context),
     fontWeight: FontWeight.w600,
     fontFamily: AppAssets.archivo,
     height: (52 / 48).spMin,

@@ -12,28 +12,38 @@ part 'app_router.gr.dart';
 
 @AutoRouterConfig()
 class AppRouter extends RootStackRouter {
-  
-  
-
   @override
   List<AutoRoute> get routes => [
-        /// routes go here
         AutoRoute(
           page: LoadingRoute.page,
           initial: true,
         ),
         AutoRoute(
           page: LandingRoute.page,
-          type: RouteType.custom(customRouteBuilder: customRouteBuilder),
+          type: RouteType.custom(customRouteBuilder: fadeScaleRouteBuilder),
         ),
-        AutoRoute(page: ProjectsRoute.page),
-        AutoRoute(page: ProjectDetailsRoute.page),
-        AutoRoute(page: AboutRoute.page),
-        AutoRoute(page: ContactRoute.page),
+        AutoRoute(
+          page: ProjectsRoute.page,
+          type: RouteType.custom(customRouteBuilder: fadeScaleRouteBuilder),
+        ),
+        AutoRoute(
+          page: ProjectDetailsRoute.page,
+          type: RouteType.custom(customRouteBuilder: fadeRouteBuilder),
+        ),
+        AutoRoute(
+          page: AboutRoute.page,
+          type: RouteType.custom(customRouteBuilder: lateralRouteBuilder),
+        ),
+        AutoRoute(
+          page: ContactRoute.page,
+          type: RouteType.custom(customRouteBuilder: lateralRouteBuilder),
+        ),
       ];
 }
 
-Route<T> customRouteBuilder<T>(
+/// Zoom-reveal transition: used for Loading->Landing and Landing->Projects,
+/// where the destination page reads as the next "centerpiece".
+Route<T> fadeScaleRouteBuilder<T>(
   BuildContext context,
   Widget child,
   AutoRoutePage<T> page,
@@ -41,10 +51,61 @@ Route<T> customRouteBuilder<T>(
   return PageRouteBuilder(
     fullscreenDialog: page.fullscreenDialog,
     settings: page,
-    transitionsBuilder: TransitionsBuilders.slideBottom,
-    transitionDuration: const Duration(milliseconds: 600),
-    pageBuilder: (context, __, ___) {
-      return child;
+    transitionDuration: const Duration(milliseconds: 500),
+    reverseTransitionDuration: const Duration(milliseconds: 350),
+    pageBuilder: (context, __, ___) => child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      final curved = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
+      return FadeTransition(
+        opacity: curved,
+        child: ScaleTransition(
+          scale: Tween<double>(begin: 0.94, end: 1).animate(curved),
+          child: child,
+        ),
+      );
+    },
+  );
+}
+
+/// Lateral slide: used for the footer-nav sibling pages (About/Contact).
+Route<T> lateralRouteBuilder<T>(
+  BuildContext context,
+  Widget child,
+  AutoRoutePage<T> page,
+) {
+  return PageRouteBuilder(
+    fullscreenDialog: page.fullscreenDialog,
+    settings: page,
+    transitionDuration: const Duration(milliseconds: 450),
+    reverseTransitionDuration: const Duration(milliseconds: 350),
+    pageBuilder: (context, __, ___) => child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      final curved = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
+      return FadeTransition(
+        opacity: curved,
+        child: SlideTransition(
+          position: Tween<Offset>(begin: const Offset(0.06, 0), end: Offset.zero).animate(curved),
+          child: child,
+        ),
+      );
+    },
+  );
+}
+
+/// Plain fade: used for Projects->ProjectDetails so it doesn't fight the
+/// Hero continuity already carrying the avatar/brand/nav text across.
+Route<T> fadeRouteBuilder<T>(
+  BuildContext context,
+  Widget child,
+  AutoRoutePage<T> page,
+) {
+  return PageRouteBuilder(
+    fullscreenDialog: page.fullscreenDialog,
+    settings: page,
+    transitionDuration: const Duration(milliseconds: 350),
+    pageBuilder: (context, __, ___) => child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return FadeTransition(opacity: animation, child: child);
     },
   );
 }

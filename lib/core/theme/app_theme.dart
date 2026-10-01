@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/core/theme/app_color_tokens.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 
 class AppThemes {
@@ -7,24 +8,31 @@ class AppThemes {
   }
 
   static final lightTheme = ThemeData(
-    primaryColor: AppColors.primary,
-    dividerColor: AppColors.divider,
-    scaffoldBackgroundColor: AppColors.white,
-    brightness: Brightness.light,
-    colorScheme: const ColorScheme.light(
-      surface: AppColors.white,
-      primary: AppColors.primary,
-    ),
     useMaterial3: true,
+    brightness: Brightness.light,
+    primaryColor: AppColors.primary,
+    dividerColor: AppColorTokens.light.divider,
+    scaffoldBackgroundColor: AppColorTokens.light.background,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: AppColors.primary,
+      brightness: Brightness.light,
+      surface: AppColorTokens.light.surface,
+    ),
+    extensions: const [AppColorTokens.light],
   );
 
   static final darkTheme = ThemeData(
-    primaryColor: AppColors.primary,
+    useMaterial3: true,
     brightness: Brightness.dark,
-
-    colorScheme: const ColorScheme.dark(),
-    // fontFamily: 'Raleway',
-    useMaterial3: false,
+    primaryColor: AppColors.primary,
+    dividerColor: AppColorTokens.dark.divider,
+    scaffoldBackgroundColor: AppColorTokens.dark.background,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: AppColors.primary,
+      brightness: Brightness.dark,
+      surface: AppColorTokens.dark.surface,
+    ),
+    extensions: const [AppColorTokens.dark],
   );
 
   // static final defaultPinTheme = PinTheme(
