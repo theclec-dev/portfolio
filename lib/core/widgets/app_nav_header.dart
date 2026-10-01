@@ -60,7 +60,7 @@ class AppNavHeader extends ConsumerWidget {
         ),
         Row(
           children: [
-            if (trailing != null) trailing!,
+            ?trailing,
             Gap(16.w),
             IconButton(
               tooltip: isDark ? 'Switch to light mode' : 'Switch to dark mode',

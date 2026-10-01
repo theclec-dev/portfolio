@@ -53,7 +53,7 @@ Route<T> fadeScaleRouteBuilder<T>(
     settings: page,
     transitionDuration: const Duration(milliseconds: 500),
     reverseTransitionDuration: const Duration(milliseconds: 350),
-    pageBuilder: (context, __, ___) => child,
+    pageBuilder: (context, _, _) => child,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       final curved = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
       return FadeTransition(
@@ -78,7 +78,7 @@ Route<T> lateralRouteBuilder<T>(
     settings: page,
     transitionDuration: const Duration(milliseconds: 450),
     reverseTransitionDuration: const Duration(milliseconds: 350),
-    pageBuilder: (context, __, ___) => child,
+    pageBuilder: (context, _, _) => child,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       final curved = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
       return FadeTransition(
@@ -103,7 +103,7 @@ Route<T> fadeRouteBuilder<T>(
     fullscreenDialog: page.fullscreenDialog,
     settings: page,
     transitionDuration: const Duration(milliseconds: 350),
-    pageBuilder: (context, __, ___) => child,
+    pageBuilder: (context, _, _) => child,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return FadeTransition(opacity: animation, child: child);
     },

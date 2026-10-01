@@ -15,8 +15,8 @@ flutter run                          # run on a connected device/simulator
 
 # auto_route generates part files (app_router.gr.dart) — required after
 # adding/editing any @RoutePage() or the routes list in app_router.dart
-dart run build_runner build --delete-conflicting-outputs
-dart run build_runner watch --delete-conflicting-outputs
+dart run build_runner build
+dart run build_runner watch
 
 flutter analyze                      # static analysis (flutter_lints rules)
 flutter test                         # run all tests

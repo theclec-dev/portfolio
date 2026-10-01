@@ -109,6 +109,16 @@ class ProjectDetailsRouteArgs {
   String toString() {
     return 'ProjectDetailsRouteArgs{key: $key, project: $project}';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ProjectDetailsRouteArgs) return false;
+    return key == other.key && project == other.project;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ project.hashCode;
 }
 
 /// generated route for

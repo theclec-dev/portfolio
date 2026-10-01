@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:portfolio/features/projects_page/data/projects_data.dart';
 import 'package:portfolio/features/projects_page/models/project_model.dart';
 
