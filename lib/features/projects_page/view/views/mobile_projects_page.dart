@@ -10,6 +10,7 @@ import 'package:portfolio/core/theme/app_color_tokens.dart';
 import 'package:portfolio/core/theme/app_text_styles.dart';
 import 'package:portfolio/core/widgets/app_nav_footer.dart';
 import 'package:portfolio/core/widgets/app_nav_header.dart';
+import 'package:portfolio/core/widgets/store_badge_column.dart';
 import 'package:portfolio/features/projects_page/controller/projects_controller.dart';
 
 class MobileProjectsPage extends ConsumerStatefulWidget {
@@ -29,7 +30,7 @@ class _MobileProjectsPageState extends ConsumerState<MobileProjectsPage> {
     final inverted = ref.watch(con.invertedProvider);
     final bg = inverted ? tokens.heroForeground : tokens.heroBackground;
     final fg = inverted ? tokens.heroBackground : tokens.heroForeground;
-    final hoveredName = ref.watch(con.projectNameProvider);
+    final hoveredProject = ref.watch(con.hoveredProjectProvider);
 
     return Scaffold(
       backgroundColor: tokens.background,
@@ -46,13 +47,37 @@ class _MobileProjectsPageState extends ConsumerState<MobileProjectsPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _DecorativeColumn(text: hoveredName, color: fg),
+                  StoreBadgeColumn(
+                    project: hoveredProject,
+                    side: StoreSide.playStore,
+                    color: fg,
+                    badgeHeight: 24.h,
+                    itemGap: 51.h,
+                  ),
                   Gap(20.w),
-                  _DecorativeColumn(text: hoveredName, color: fg),
+                  StoreBadgeColumn(
+                    project: hoveredProject,
+                    side: StoreSide.playStore,
+                    color: fg,
+                    badgeHeight: 24.h,
+                    itemGap: 51.h,
+                  ),
                   const Spacer(),
-                  _DecorativeColumn(text: hoveredName, color: fg),
+                  StoreBadgeColumn(
+                    project: hoveredProject,
+                    side: StoreSide.appStore,
+                    color: fg,
+                    badgeHeight: 24.h,
+                    itemGap: 51.h,
+                  ),
                   Gap(20.w),
-                  _DecorativeColumn(text: hoveredName, color: fg),
+                  StoreBadgeColumn(
+                    project: hoveredProject,
+                    side: StoreSide.appStore,
+                    color: fg,
+                    badgeHeight: 24.h,
+                    itemGap: 51.h,
+                  ),
                 ],
               ),
             ),
@@ -80,12 +105,12 @@ class _MobileProjectsPageState extends ConsumerState<MobileProjectsPage> {
                           child: MouseRegion(
                             onEnter: (_) {
                               setState(() => _hoveredIndex = index);
-                              ref.read(con.projectNameProvider.notifier).state = project.name;
+                              ref.read(con.hoveredProjectProvider.notifier).state = project;
                               ref.read(con.invertedProvider.notifier).state = true;
                             },
                             onExit: (_) {
                               setState(() => _hoveredIndex = null);
-                              ref.read(con.projectNameProvider.notifier).state = '';
+                              ref.read(con.hoveredProjectProvider.notifier).state = null;
                               ref.read(con.invertedProvider.notifier).state = false;
                             },
                             child: GestureDetector(
@@ -130,27 +155,6 @@ class _MobileProjectsPageState extends ConsumerState<MobileProjectsPage> {
               ],
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _DecorativeColumn extends StatelessWidget {
-  const _DecorativeColumn({required this.text, required this.color});
-
-  final String text;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: List.generate(
-        9,
-        (index) => Padding(
-          padding: EdgeInsets.only(top: 51.h),
-          child: Text(text, style: TextStyle(color: color)),
         ),
       ),
     );

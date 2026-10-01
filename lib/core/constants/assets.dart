@@ -16,5 +16,9 @@ class AppAssets {
   //project images
   static String projectIcon(String id) => '${imagePath}projects/$id.png';
 
+  //store badges
+  static String googlePlayBadge = '${imagePath}badges/google_play_badge.png';
+  static String appStoreBadge = '${imagePath}badges/app_store_badge.png';
+
   //icons
 }
