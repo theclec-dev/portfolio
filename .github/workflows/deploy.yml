@@ -26,8 +26,19 @@ jobs:
 
       - run: flutter pub get
 
-      - run: dart run build_runner build --delete-conflicting-outputs
-
+      # NOTE: lib/core/router/app_router.gr.dart is committed and used as-is
+      # rather than regenerated here. The project's currently pinned
+      # auto_route_generator resolves an `analyzer` version too old to parse
+      # a newer Dart SDK syntax feature, so `dart run build_runner build`
+      # crashes on any Flutter SDK new enough to hit it (reproduced both
+      # locally and in this workflow — see auto_route_generator issue re:
+      # "Missing implementation of visitDotShorthandPropertyAccess").
+      # Since no routes have changed shape, the committed generated file is
+      # already correct. If you add/rename/remove a route, you'll need to
+      # either fix that toolchain mismatch (upgrade auto_route/
+      # auto_route_generator/build_runner to versions resolving a current
+      # analyzer) or hand-roll the new PageRouteInfo entries to match the
+      # existing generated pattern.
       - run: flutter build web --release --base-href /portfolio/
 
       - uses: actions/upload-pages-artifact@v3
