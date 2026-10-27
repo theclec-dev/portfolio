@@ -5,13 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
+import 'package:portfolio/core/constants/assets.dart';
 import 'package:portfolio/core/router/app_router.dart';
 import 'package:portfolio/core/theme/app_color_tokens.dart';
 import 'package:portfolio/core/theme/app_text_styles.dart';
 import 'package:portfolio/core/widgets/app_nav_footer.dart';
 import 'package:portfolio/core/widgets/app_nav_header.dart';
-import 'package:portfolio/core/widgets/store_badge_column.dart';
 import 'package:portfolio/features/projects_page/controller/projects_controller.dart';
+import 'package:portfolio/features/projects_page/models/project_model.dart';
 
 class DesktopProjectsView extends ConsumerStatefulWidget {
   const DesktopProjectsView({super.key});
@@ -40,45 +41,16 @@ class _DesktopProjectsViewState extends ConsumerState<DesktopProjectsView> {
         padding: EdgeInsets.fromLTRB(95.w, 54.h, 40.w, 23.h),
         child: Stack(
           children: [
-            Container(
-              padding: EdgeInsets.only(bottom: 87.h),
-              width: MediaQuery.sizeOf(context).width,
-              height: MediaQuery.sizeOf(context).height,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  StoreBadgeColumn(
-                    project: hoveredProject,
-                    side: StoreSide.playStore,
-                    color: fg,
-                    badgeHeight: 32.h,
-                    itemGap: 51.h,
+            Positioned.fill(
+              child: IgnorePointer(
+                child: Center(
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    child: hoveredProject == null
+                        ? const SizedBox.shrink(key: ValueKey('no-preview'))
+                        : _ProjectPreview(key: ValueKey(hoveredProject.id), project: hoveredProject),
                   ),
-                  Gap(20.w),
-                  StoreBadgeColumn(
-                    project: hoveredProject,
-                    side: StoreSide.playStore,
-                    color: fg,
-                    badgeHeight: 32.h,
-                    itemGap: 51.h,
-                  ),
-                  Gap(376.w),
-                  StoreBadgeColumn(
-                    project: hoveredProject,
-                    side: StoreSide.appStore,
-                    color: fg,
-                    badgeHeight: 32.h,
-                    itemGap: 51.h,
-                  ),
-                  Gap(20.w),
-                  StoreBadgeColumn(
-                    project: hoveredProject,
-                    side: StoreSide.appStore,
-                    color: fg,
-                    badgeHeight: 32.h,
-                    itemGap: 51.h,
-                  ),
-                ],
+                ),
               ),
             ),
             Column(
@@ -157,6 +129,32 @@ class _DesktopProjectsViewState extends ConsumerState<DesktopProjectsView> {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The hovered project's screenshot/mockup, centred behind the list. Dimmed
+/// so the project names stay readable. Renders nothing when the project has
+/// no `<id>_preview.png` asset yet.
+class _ProjectPreview extends StatelessWidget {
+  const _ProjectPreview({super.key, required this.project});
+  final ProjectModel project;
+
+  static const double _opacity = 0.35;
+
+  @override
+  Widget build(BuildContext context) {
+    return Opacity(
+      opacity: _opacity,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24.r),
+        child: Image.asset(
+          AppAssets.projectPreview(project.id),
+          height: MediaQuery.sizeOf(context).height * 0.6,
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
         ),
       ),
     );

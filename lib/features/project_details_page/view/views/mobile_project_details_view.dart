@@ -80,6 +80,13 @@ class MobileProjectDetailsView extends StatelessWidget {
                           _StoreLinkButton(label: 'App Store', url: project.appStoreUrl!),
                       ],
                     ).animate(delay: 200.ms).fadeIn(duration: 500.ms).slideY(begin: 0.1, end: 0),
+                    if (project.techDetails case final details? when !details.isEmpty) ...[
+                      Gap(40.h),
+                      _TechDetailsSection(details: details)
+                          .animate(delay: 250.ms)
+                          .fadeIn(duration: 500.ms)
+                          .slideY(begin: 0.05, end: 0),
+                    ],
                     Gap(39.h),
                   ],
                 ),
@@ -88,6 +95,87 @@ class MobileProjectDetailsView extends StatelessWidget {
             AppNavFooter(current: AppNavItem.projects, gap: 24.w),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _TechDetailsSection extends StatelessWidget {
+  const _TechDetailsSection({required this.details});
+  final ProjectTechDetails details;
+
+  @override
+  Widget build(BuildContext context) {
+    final tokens = Theme.of(context).extension<AppColorTokens>()!;
+    final label = AppTextStyles.section(context);
+    final body = label.copyWith(
+      fontWeight: FontWeight.w400,
+      color: tokens.textSecondary,
+      height: 1.5,
+    );
+
+    Widget block(String title, Widget child) => Padding(
+          padding: EdgeInsets.only(bottom: 24.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: label),
+              Gap(8.h),
+              child,
+            ],
+          ),
+        );
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 4.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Divider(color: tokens.divider, height: 1),
+          Gap(24.h),
+          Text('Technical details', style: AppTextStyles.homeTitle(context)),
+          Gap(20.h),
+          for (final r in details.rows) block(r.label, Text(r.value, style: body)),
+          if (details.techStack.isNotEmpty)
+            block(
+              'Tech stack',
+              Wrap(
+                spacing: 8.w,
+                runSpacing: 8.h,
+                children: [
+                  for (final tech in details.techStack)
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: tokens.divider),
+                        borderRadius: BorderRadius.circular(100.r),
+                      ),
+                      child: Text(tech, style: label.copyWith(fontSize: 12.spMin)),
+                    ),
+                ],
+              ),
+            ),
+          if (details.highlights.isNotEmpty)
+            block(
+              'Highlights',
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final item in details.highlights)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 8.h),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('•  ', style: body),
+                          Expanded(child: Text(item, style: body)),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            ),
+        ],
       ),
     );
   }

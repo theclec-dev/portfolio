@@ -58,9 +58,12 @@ class _ResponsiveAppState extends ConsumerState<ResponsiveApp> {
         darkTheme: AppThemes.darkTheme,
         themeMode: themeMode,
         builder: (context, child) {
+          // Hero flights are drawn in the Navigator's overlay, outside any
+          // page Scaffold. Without a Material ancestor, text in flight falls
+          // back to Flutter's yellow double-underline debug style.
           return ResponsiveWrapper(
             isMobile: isMobile,
-            child: child!,
+            child: Material(type: MaterialType.transparency, child: child!),
           );
         },
       ),

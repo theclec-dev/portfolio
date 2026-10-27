@@ -16,9 +16,9 @@ class AppAssets {
   //project images
   static String projectIcon(String id) => '${imagePath}projects/$id.png';
 
-  //store badges
-  static String googlePlayBadge = '${imagePath}badges/google_play_badge.png';
-  static String appStoreBadge = '${imagePath}badges/app_store_badge.png';
+  /// Screenshot/mockup shown behind the Projects list while [id] is hovered.
+  /// Optional: if the file doesn't exist, the hover simply shows no image.
+  static String projectPreview(String id) => '${imagePath}projects/${id}_preview.png';
 
   //icons
 }

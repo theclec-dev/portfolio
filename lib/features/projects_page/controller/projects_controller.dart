@@ -7,8 +7,8 @@ class ProjectsController {
   static final _instance = ProjectsController._internal();
   factory ProjectsController() => _instance;
 
-  /// The currently hovered project row, if any. Drives the decorative
-  /// store-badge background columns on the Projects page.
+  /// The currently hovered project row, if any. Drives the project preview
+  /// image shown behind the desktop Projects list.
   final hoveredProjectProvider = StateProvider<ProjectModel?>((ref) => null);
 
   /// Whether the page's background/foreground colors are inverted (true

@@ -10,7 +10,6 @@ import 'package:portfolio/core/theme/app_color_tokens.dart';
 import 'package:portfolio/core/theme/app_text_styles.dart';
 import 'package:portfolio/core/widgets/app_nav_footer.dart';
 import 'package:portfolio/core/widgets/app_nav_header.dart';
-import 'package:portfolio/core/widgets/store_badge_column.dart';
 import 'package:portfolio/features/projects_page/controller/projects_controller.dart';
 
 class MobileProjectsPage extends ConsumerStatefulWidget {
@@ -30,7 +29,6 @@ class _MobileProjectsPageState extends ConsumerState<MobileProjectsPage> {
     final inverted = ref.watch(con.invertedProvider);
     final bg = inverted ? tokens.heroForeground : tokens.heroBackground;
     final fg = inverted ? tokens.heroBackground : tokens.heroForeground;
-    final hoveredProject = ref.watch(con.hoveredProjectProvider);
 
     return Scaffold(
       backgroundColor: tokens.background,
@@ -40,47 +38,6 @@ class _MobileProjectsPageState extends ConsumerState<MobileProjectsPage> {
         padding: EdgeInsets.all(12.w),
         child: Stack(
           children: [
-            Container(
-              padding: EdgeInsets.only(bottom: 87.h),
-              width: MediaQuery.sizeOf(context).width,
-              height: MediaQuery.sizeOf(context).height,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  StoreBadgeColumn(
-                    project: hoveredProject,
-                    side: StoreSide.playStore,
-                    color: fg,
-                    badgeHeight: 24.h,
-                    itemGap: 51.h,
-                  ),
-                  Gap(20.w),
-                  StoreBadgeColumn(
-                    project: hoveredProject,
-                    side: StoreSide.playStore,
-                    color: fg,
-                    badgeHeight: 24.h,
-                    itemGap: 51.h,
-                  ),
-                  const Spacer(),
-                  StoreBadgeColumn(
-                    project: hoveredProject,
-                    side: StoreSide.appStore,
-                    color: fg,
-                    badgeHeight: 24.h,
-                    itemGap: 51.h,
-                  ),
-                  Gap(20.w),
-                  StoreBadgeColumn(
-                    project: hoveredProject,
-                    side: StoreSide.appStore,
-                    color: fg,
-                    badgeHeight: 24.h,
-                    itemGap: 51.h,
-                  ),
-                ],
-              ),
-            ),
             Column(
               children: [
                 AppNavHeader(avatarRadius: 20.r, gap: 8.w),

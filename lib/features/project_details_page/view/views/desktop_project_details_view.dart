@@ -77,6 +77,13 @@ class DesktopProjectDetailsView extends StatelessWidget {
                           _StoreLinkButton(label: 'App Store', url: project.appStoreUrl!),
                       ],
                     ).animate(delay: 200.ms).fadeIn(duration: 500.ms).slideY(begin: 0.1, end: 0),
+                    if (project.techDetails case final details? when !details.isEmpty) ...[
+                      Gap(96.h),
+                      _TechDetailsSection(details: details)
+                          .animate(delay: 250.ms)
+                          .fadeIn(duration: 500.ms)
+                          .slideY(begin: 0.05, end: 0),
+                    ],
                     Gap(39.h),
                   ],
                 ),
@@ -85,6 +92,86 @@ class DesktopProjectDetailsView extends StatelessWidget {
             AppNavFooter(current: AppNavItem.projects),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _TechDetailsSection extends StatelessWidget {
+  const _TechDetailsSection({required this.details});
+  final ProjectTechDetails details;
+
+  @override
+  Widget build(BuildContext context) {
+    final tokens = Theme.of(context).extension<AppColorTokens>()!;
+    final label = AppTextStyles.section(context).copyWith(fontSize: 22.spMin);
+    final body = label.copyWith(
+      fontWeight: FontWeight.w400,
+      color: tokens.textSecondary,
+      height: 1.6,
+    );
+
+    Widget row(String title, Widget child) => Padding(
+          padding: EdgeInsets.only(bottom: 32.h),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(width: 260.w, child: Text(title, style: label)),
+              Expanded(child: child),
+            ],
+          ),
+        );
+
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 1100.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Divider(color: tokens.divider, height: 1),
+          Gap(48.h),
+          Text('Technical details', style: AppTextStyles.homeTitle(context)),
+          Gap(40.h),
+          for (final r in details.rows) row(r.label, Text(r.value, style: body)),
+          if (details.techStack.isNotEmpty)
+            row(
+              'Tech stack',
+              Wrap(
+                spacing: 12.w,
+                runSpacing: 12.h,
+                children: [
+                  for (final tech in details.techStack)
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: tokens.divider),
+                        borderRadius: BorderRadius.circular(100.r),
+                      ),
+                      child: Text(tech, style: label.copyWith(fontSize: 16.spMin, height: 1.4)),
+                    ),
+                ],
+              ),
+            ),
+          if (details.highlights.isNotEmpty)
+            row(
+              'Highlights',
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final item in details.highlights)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 12.h),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('•  ', style: body),
+                          Expanded(child: Text(item, style: body)),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            ),
+        ],
       ),
     );
   }
